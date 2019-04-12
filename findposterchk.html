@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi">
 <meta name="format-detection" content="telephone=no">
 <script src="lib/fukuno.js"></script>
+<script src="lib/gmaps.js"></script>
 <script>"use strict";
 
 var DEFAULT_ORG;
@@ -132,7 +133,7 @@ var init = function() {
 		var s = "";
 		for (var i = 0; i < markers.length; i++) {
 			var m = markers[i];
-			s += m.id + "\t" + m.timestamp + "\t" + getName(m.data) + "\thttp://maps.google.com/?ll=" + m.data.lat + "," + m.data.lng + "\n";
+			s += m.id + "\t" + m.timestamp + "\t" + getName(m.data) + "\thttps://maps.google.com/?ll=" + m.data.lat + "," + m.data.lng + "\n";
 		}
 		prompt(s);
 	};
@@ -239,7 +240,7 @@ var loadRefuge2 = function(type, ll, funcnext) {
 		" filter(xsd:float(?lat) < " + latmax + " && xsd:float(?lat) > " + latmin + " && xsd:float(?lng) < " + lngmax + " && xsd:float(?lng) > " + lngmin + ")" +
 		"}";
 //alert(lat + " " + lng);
-	var baseurl = "http://sparql.odp.jig.jp/data/sparql";
+	var baseurl = "https://sparql.odp.jig.jp/data/sparql";
 	var url = baseurl + "?query=" + encodeURIComponent(q) + "&output=json";
 	var func = function(data) {
 //		dump(data);
@@ -391,7 +392,7 @@ var btn = function(n) {
 };
 var getContent = function(data) {
 	var pos = data.pos;
-	var mapurl = "http://maps.google.co.jp/maps?ll=" + pos.lat() + "," + pos.lng();
+	var mapurl = "https://maps.google.co.jp/maps?ll=" + pos.lat() + "," + pos.lng();
 	var s = [];
 	s.push("<div id='data'>");
 	
@@ -557,7 +558,7 @@ var xml2json = function(url, callback) {
 //	var host = "fukuno.jig.jp";
 //	var host = "localhost:8080";
 	var host = "sabae.cc";
-	var base = "http://" + host + "/proxy/ITqT5WkhCf2yn1s9?cnv=xml2json";
+	var base = "https://" + host + "/proxy/ITqT5WkhCf2yn1s9?cnv=xml2json";
 	var url2 = base + "&cache=no&callback=" + getCallbackMethod(callback) + "&url=" + encodeURI(url);
 	jsonp(url2);
 };
@@ -577,10 +578,6 @@ var getLanguage2 = function() {
 		lang = hash.substring(1);
 	}
 	return lang;
-};
-var loadLocalAPI = function() {
-	var apiurl = "http://maps.google.com/maps/api/js?sensor=true&language=" + getLanguage2();
-	document.write('<' + 'script src="' + apiurl + '"' + ' type="text/javascript"><' + '/script>');
 };
 loadLocalAPI();
 
